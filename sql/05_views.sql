@@ -9,6 +9,8 @@ ON b.book_id = bw.book_id
 JOIN Members m
 ON bw.member_id = m.member_id;
 
+-- Edit Kevin: Sind das nicht ALLE Borrowings und nicht nur die aktuellen?
+
 -- View 2: PopularBooks
 CREATE VIEW popularBooks AS
 SELECT b.title, COUNT(*)
