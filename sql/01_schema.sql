@@ -1,5 +1,11 @@
 -- Part 1 - SQL Table Creation & Constraints
 
+
+DROP TABLE Borrowing CASCADE ;
+DROP TABLE Members CASCADE ;
+DROP TABLE Books CASCADE ;
+DROP TABLE authors CASCADE ;
+
 -- Task 1.
 CREATE TABLE Authors (
                          author_id INT PRIMARY KEY,

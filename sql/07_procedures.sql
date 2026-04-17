@@ -1,12 +1,24 @@
 -- Part 7 - Stored Procedures
 
-CREATE PROCEDURE BorrowBook(member_id INT, book_id INT)
-BEGIN
-    START TRANSACTION
+DROP PROCEDURE BorrowBook(in_member_id INTEGER, in_book_id INTEGER, result TEXT);
 
-        INSERT INTO Borrowing (borrow_id, borrow_date, return_date, member_id, book_id, borrow_status)
-        -- ab hier DEFINITIV einfach nur hingerotzt
-        VALUES (borrow_counter_seq, CURRENT_DATE, CURRENT_DATE+7, member_id, book_id, ACTIVE)
+CREATE PROCEDURE BorrowBook(
+    IN in_member_id INT,
+    IN in_book_id INT,
+    OUT result TEXT
+)
+LANGUAGE plpgsql
+AS $$
+    BEGIN
+        INSERT INTO Borrowing (borrow_date, return_date, member_id, book_id, borrow_status)
+        VALUES (CURRENT_DATE, CURRENT_DATE+7, in_member_id, in_book_id, TRUE);
 
-    COMMIT;
-END;
+        result := 'Success';
+
+    EXCEPTION WHEN OTHERS THEN
+        result := 'Failure: ' || SQLERRM;
+
+    END;
+$$;
+
+CALL BorrowBook(1, 3, NULL);
