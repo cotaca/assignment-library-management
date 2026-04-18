@@ -49,8 +49,8 @@ CREATE INDEX idx_email
     ON Members(email);
 
 -- Task 3.
-ALTER TABLE members
+ALTER TABLE Members
     ADD CONSTRAINT chk_email_length CHECK(LENGTH(email) < 64);
 
-ALTER TABLE borrowing
+ALTER TABLE Borrowing
     ADD COLUMN borrow_status BOOLEAN NOT NULL;

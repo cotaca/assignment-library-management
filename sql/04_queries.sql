@@ -17,7 +17,7 @@ ON b.author_id = a.author_id;
 -- SELECT b.*
 -- FROM Books b
 -- FULL JOIN Borrowing bw ON b.book_id = bw.book_id
--- WHERE bw.book_id = NULL;
+-- WHERE bw.book_id IS NULL;
 
 -- Task 4 - Count borrowings per genre
 SELECT b.genre, COUNT(bw.borrow_id)

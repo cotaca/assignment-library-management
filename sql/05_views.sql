@@ -12,7 +12,7 @@ WHERE bw.borrow_status = TRUE;
 
 -- View 2: PopularBooks
 CREATE VIEW popularBooks AS
-SELECT b.title, COUNT(*)
+SELECT b.title, COUNT(*) AS borrowing_count
 FROM Borrowing bw
 JOIN Books b
 ON b.book_id = bw.book_id
