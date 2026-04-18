@@ -27,18 +27,18 @@ VALUES
     ( 'Ronaltor', 'Christian', 'Portugal');
 
 -- 10 books
-INSERT INTO Books (title, genre, author_id)
+INSERT INTO Books (title, genre, publication_year, author_id)
 VALUES
-    ( 'Harald Gehstock 1: Der Held der Steine', 'Science-Fiction', 1),
-    ( 'Harald Gehstock 2: Der Escape-Room von Andromeda', 'Science-Fiction', 1),
-    ( 'Harald Gehstock 3: Der Gefangene vom Heinz-Krügel-Platz', 'Science-Fiction', 1),
-    ( 'Her Lock''s Home', 'Mystery', 2),
-    ( 'E. Watson, the helper behind', 'Biography', 2),
-    ( 'T''ain''t what you do, it''s the way that you do it', 'Roman', 3),
-    ( 'How to: Urheberrechtsverletzung entgehen', 'Roman', 3),
-    ( 'Kartoffel Ranking, mit Florian Wirtz', 'Comic', 3),
-    ( 'Die besten Kirchenlieder', 'Comedy', 4),
-    ( 'SIUUUUU', 'Biografie', 5);
+    ( 'Harald Gehstock 1: Der Held der Steine', 'Science-Fiction', 1998, 1),
+    ( 'Harald Gehstock 2: Der Escape-Room von Andromeda', 'Science-Fiction', 2000, 1),
+    ( 'Harald Gehstock 3: Der Gefangene vom Heinz-Krügel-Platz', 'Science-Fiction', 2001, 1),
+    ( 'Her Lock''s Home', 'Mystery', 1788, 2),
+    ( 'E. Watson, the helper behind', 'Biography', 1990, 2),
+    ( 'T''ain''t what you do, it''s the way that you do it', 'Roman', 2024, 3),
+    ( 'How to: Urheberrechtsverletzung entgehen', 'Roman', 2017, 3),
+    ( 'Kartoffel Ranking, mit Florian Wirtz', 'Comic', 2024, 3),
+    ( 'Die besten Kirchenlieder', 'Comedy', 1672, 4),
+    ( 'SIUUUUU', 'Biografie', 2016, 5);
 
 -- 6 members
 INSERT INTO Members (last_name, first_name, email)
@@ -65,4 +65,3 @@ VALUES
     ( '2026-03-15', NULL,        1, 9, TRUE), -- Aktiv
     ( '2026-03-18', NULL,        6, 4, TRUE), -- Aktiv
     ( '2026-02-20', '2026-03-01', 2, 10, FALSE); -- Zurückgegeben
-

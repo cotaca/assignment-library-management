@@ -19,6 +19,7 @@ CREATE TABLE Books (
                        title TEXT NOT NULL,
                        genre TEXT,
                        author_id INT,
+                       published_year INT > 1500,
                        FOREIGN KEY (author_id) REFERENCES Authors(author_id)
 );
 
