@@ -1,19 +1,27 @@
 -- Part 5 - Views
 
--- View 1: CurrentBorrowings
-CREATE VIEW currentBorrowings AS
-SELECT m.last_name AS member_last_name, m.first_name AS member_first_name, b.title, bw.borrow_date, (CURRENT_DATE - bw.borrow_date) AS days_borrowed
-FROM Books b
-JOIN Borrowing bw
-ON b.book_id = bw.book_id
-JOIN Members m
-ON bw.member_id = m.member_id
-WHERE bw.borrow_status = TRUE;
+-- View 1: Active Loans
+CREATE VIEW CurrentBorrowings AS
+    SELECT
+        m.last_name AS m_first_name,
+        m.first_name AS m_last_name,
+        books.title AS b_title,
+        bw.borrow_date AS loan_date,
+        (CURRENT_DATE - bw.borrow_date) AS days_on_loan
+    FROM
+        Members m
+    JOIN Borrowing bw ON m.member_id = bw.member_id
+    JOIN Books books ON bw.book_id = books.book_id
+    WHERE
+        bw.borrow_status = TRUE;
 
--- View 2: PopularBooks
+-- View 2: Book Popularity
 CREATE VIEW popularBooks AS
-SELECT b.title, COUNT(*) AS borrowing_count
-FROM Borrowing bw
-JOIN Books b
-ON b.book_id = bw.book_id
-GROUP BY b.title;
+    SELECT
+        books.title AS b_title,
+        COUNT(*) AS total_loans
+    FROM
+        Borrowing bw
+    JOIN Books books ON bw.book_id = books.book_id
+    GROUP BY
+        books.title;
