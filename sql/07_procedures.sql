@@ -3,22 +3,33 @@
 DROP PROCEDURE BorrowBook(INTEGER, INTEGER, TEXT);
 
 CREATE PROCEDURE BorrowBook(
-    IN in_member_id INT,
-    IN in_book_id INT,
+    memberId INT,
+    bookId INT,
     OUT result TEXT
 )
-LANGUAGE plpgsql
-AS $$
+    LANGUAGE plpgsql
+    AS $$
     BEGIN
-        INSERT INTO Borrowing (borrow_date, return_date, member_id, book_id, borrow_status)
-        VALUES (CURRENT_DATE, CURRENT_DATE+7, in_member_id, in_book_id, TRUE);
+        INSERT INTO Borrowing (
+            borrow_date,
+            return_date,
+            member_id,
+            book_id,
+            borrow_status
+        ) VALUES (
+            CURRENT_DATE,
+            CURRENT_DATE + 67,
+            memberId,
+            bookId,
+            TRUE
+        );
 
-        result := 'Success';
+        result := 'Book borrowed successfully';
 
     EXCEPTION WHEN OTHERS THEN
-        result := 'Failure: ' || SQLERRM;
+        result := 'Error: 404' || SQLERRM;
 
     END;
-$$;
+    $$;
 
 CALL BorrowBook(1, 3, NULL);
