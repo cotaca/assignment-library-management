@@ -4,49 +4,42 @@
 ALTER TABLE books
 DROP COLUMN author_id;
 
--- New Associative Table
 CREATE TABLE Book_Authors (
-    book_id INT,
     author_id INT,
+    book_id INT,
     role_text TEXT,
-    PRIMARY KEY (book_id, author_id),
-    FOREIGN KEY (book_id) REFERENCES Books(book_id),
-    FOREIGN KEY (author_id) REFERENCES Authors(author_id)
+    PRIMARY KEY (author_id, book_id),
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
 );
 
 -- Testdata
-INSERT INTO Book_Authors (book_id, author_id, role_text) VALUES
--- Buch 1 hat zwei Autoren (Kollaboration)
-(1, 1, 'Main Author'),
-(1, 2, 'Co-Author'),
-(1, 3, 'Co-Author'),
+INSERT INTO Book_Authors (book_id, author_id, role_text) VALUES (1, 1, 'Author');
+INSERT INTO Book_Authors (book_id, author_id, role_text) VALUES (1, 2, 'Co-Author');
+INSERT INTO Book_Authors (book_id, author_id, role_text) VALUES (1, 3, 'Co-Author');
+INSERT INTO Book_Authors (book_id, author_id, role_text) VALUES (2, 2, 'Author');
+INSERT INTO Book_Authors (book_id, author_id, role_text) VALUES (3, 2, 'Author');
+INSERT INTO Book_Authors (book_id, author_id, role_text) VALUES (4, 4, 'Author');
+INSERT INTO Book_Authors (book_id, author_id, role_text) VALUES (4, 5, 'Editor');
 
--- Autor 3 hat zwei verschiedene Bücher geschrieben
-(2, 3, 'Main Author'),
-(3, 3, 'Main Author'),
+-- Books; multiple authors
+SELECT Books.*
+FROM Books
+JOIN Book_Authors ON Books.book_id = Book_Authors.book_id
+GROUP BY Books.book_id
+HAVING COUNT(Book_Authors.author_id) > 1;
 
--- Ein Buch mit einem speziellen Mitwirkenden
-(4, 4, 'Author'),
-(4, 5, 'Editor');
-
--- Query: Books with multiple authors
-SELECT b.*
-FROM books b
-JOIN Book_Authors ba ON b.book_id = ba.book_id
-GROUP BY b.book_id
-HAVING COUNT(ba.author_id) > 1;
-
--- Query: Author with the most collaborations
-SELECT a.last_name, COUNT(ba.book_id) AS collaboration_count
-FROM authors a
-JOIN Book_Authors ba ON a.author_id = ba.author_id
-GROUP BY a.author_id, a.last_name
-ORDER BY collaboration_count DESC
+-- Author; most collaborations
+SELECT Authors.last_name, COUNT(Book_Authors.book_id) AS collaborations_count
+FROM Authors
+JOIN Book_Authors ON Authors.author_id = Book_Authors.author_id
+GROUP BY Authors.author_id, Authors.last_name
+ORDER BY collaborations_count DESC
 LIMIT 1;
 
 -- View: BookAuthorDetails
 CREATE VIEW BookAuthorDetails AS
-SELECT b.title, a.last_name, a.first_name, ba.role_text
-FROM books b
-JOIN Book_Authors ba ON b.book_id = ba.book_id
-JOIN Authors a ON ba.author_id = a.author_id;
+SELECT Books.title, Authors.last_name, Authors.first_name, Book_Authors.role_text
+FROM Books
+JOIN Book_Authors ON Books.book_id = Book_Authors.book_id
+JOIN Authors ON Book_Authors.author_id = Authors.author_id;
