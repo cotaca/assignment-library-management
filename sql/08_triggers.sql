@@ -1,40 +1,40 @@
 -- Part 8 - Triggers (Updated)
 
--- Task 1:
+-- Task 1: Prevent over-borrowing
 CREATE FUNCTION checkOverBorrowing() RETURNS TRIGGER
-    LANGUAGE plpgsql
+LANGUAGE plpgsql
 AS $$
-    BEGIN
-        IF NOT isbookavailable(NEW.book_id) THEN
-            RAISE EXCEPTION 'Buch nicht verfügbar';
-        END IF;
-
-        RETURN NEW;
-    END;
+BEGIN
+    IF NOT isbookavailable(NEW.book_id) THEN
+        RAISE EXCEPTION 'Book is already loaned';
+    END IF;
+    RETURN NEW;
+END;
 $$;
 
 CREATE TRIGGER preventOverBorrowing
-BEFORE INSERT ON borrowing
+BEFORE INSERT ON Borrowing
 FOR EACH ROW
 EXECUTE FUNCTION checkOverBorrowing();
 
--- Task 2:
-ALTER TABLE borrowing
-    ADD COLUMN trans_ref TEXT;
+-- Task 2: Handle book returns with reference generation
+ALTER TABLE borrowing ADD COLUMN reference TEXT;
 
 CREATE FUNCTION checkHandleBookReturn() RETURNS TRIGGER
-    LANGUAGE plpgsql
+LANGUAGE plpgsql
 AS $$
-    BEGIN
-        IF OLD.return_date IS NULL AND NEW.return_date IS NOT NULL THEN
-            IF NOT NEW.return_date >= NEW.borrow_date THEN
-                RAISE EXCEPTION 'Macht keinen Sinn';
-            ELSE
-                UPDATE borrowing SET trans_ref = borrow_date + member_id WHERE borrow_id = NEW.borrow_id;
-            END IF;
+BEGIN
+    IF (OLD.return_date IS NULL AND NEW.return_date IS NOT NULL) THEN
+        IF (NEW.return_date >= NEW.borrow_date) THEN
+            UPDATE borrowing
+            SET reference = borrow_date + member_id
+            WHERE borrow_id = NEW.borrow_id;
+        ELSE
+            RAISE EXCEPTION 'Return date cannot be before borrow date';
         END IF;
-        RETURN NEW;
-    END;
+    END IF;
+    RETURN NEW;
+END;
 $$;
 
 CREATE TRIGGER handleBookReturn
