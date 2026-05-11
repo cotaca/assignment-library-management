@@ -5,6 +5,7 @@ DROP TABLE Borrowing CASCADE ;
 DROP TABLE Members CASCADE ;
 DROP TABLE Books CASCADE ;
 DROP TABLE authors CASCADE ;
+DROP TABLE Book_Authors CASCADE ;
 
 -- Task 1.
 CREATE TABLE Authors (

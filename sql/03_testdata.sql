@@ -59,7 +59,7 @@ VALUES
     ( '2026-02-10', NULL,         5, 1, TRUE), -- Aktiv
     ( '2026-02-15', NULL,         6, 10, TRUE), -- Aktiv
     ( '2026-01-05', '2026-01-15', 3, 1, FALSE), -- Zurückgegeben
-    ( '2026-03-01', NULL,         3, 2, TRUE), -- Aktiv
+    ( '2026-03-01', NULL,         5, 2, TRUE), -- Aktiv
     ( '2026-01-12', '2026-01-25', 5, 2, FALSE), -- Zurückgegeben
     ( '2026-03-10', NULL,         5, 3, TRUE), -- Aktiv
     ( '2026-03-15', NULL,        1, 9, TRUE), -- Aktiv
