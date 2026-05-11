@@ -1,27 +1,25 @@
 -- Part 4 - SQL Queries
 
--- Task 1 - List all books with their author names
-SELECT b.*, a.first_name, a.last_name
-FROM Books b
-JOIN Authors a
-ON b.author_id = a.author_id;
+-- Task 1
+SELECT Books.*, Authors.first_name, Authors.last_name
+FROM Books
+JOIN Authors ON Books.author_id = Authors.author_id;
 
--- Task 2 - List members who borrowed more than 3 books
--- SELECT m.*
--- FROM members m
---          LEFT JOIN borrowing b ON m.member_id = b.member_id
--- GROUP BY b.book_id
--- HAVING count(*) > 3;
+-- Task 2
+SELECT Members.*
+FROM Members
+LEFT JOIN Borrowing ON Members.member_id = Borrowing.member_id
+    GROUP BY Members.member_id
+    HAVING count(*) > 3;
 
--- Task 3 - Find books never borrowed
--- SELECT b.*
--- FROM Books b
--- FULL JOIN Borrowing bw ON b.book_id = bw.book_id
--- WHERE bw.book_id IS NULL;
+-- Task 3
+SELECT Books.*
+FROM Books
+FULL JOIN Borrowing ON Books.book_id = Borrowings.book_id
+    WHERE Borrowings.book_id IS NULL;
 
--- Task 4 - Count borrowings per genre
-SELECT b.genre, COUNT(bw.borrow_id)
-FROM Books b
-RIGHT JOIN Borrowing bw
-ON b.book_id = bw.book_id
-GROUP BY b.genre;
+-- Task 4
+SELECT Books.genre, COUNT(Borrowings.borrow_id)
+FROM Books
+RIGHT JOIN Borrowing ON Books.book_id = Borrowings.book_id
+    GROUP BY Books.genre;
