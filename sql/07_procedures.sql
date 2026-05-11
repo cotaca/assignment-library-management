@@ -1,6 +1,6 @@
 -- Part 7 - Stored Procedures
 
-DROP PROCEDURE BorrowBook(in_member_id INTEGER, in_book_id INTEGER, result TEXT);
+DROP PROCEDURE BorrowBook(INTEGER, INTEGER, TEXT);
 
 CREATE PROCEDURE BorrowBook(
     IN in_member_id INT,

@@ -20,6 +20,7 @@ CREATE TABLE Books (
                        title TEXT NOT NULL,
                        genre TEXT,
                        author_id INT,
+                       published_year INT > 1500,
                        FOREIGN KEY (author_id) REFERENCES Authors(author_id)
 );
 
@@ -50,8 +51,8 @@ CREATE INDEX idx_email
     ON Members(email);
 
 -- Task 3.
-ALTER TABLE members
+ALTER TABLE Members
     ADD CONSTRAINT chk_email_length CHECK(LENGTH(email) < 64);
 
-ALTER TABLE borrowing
+ALTER TABLE Borrowing
     ADD COLUMN borrow_status BOOLEAN NOT NULL;

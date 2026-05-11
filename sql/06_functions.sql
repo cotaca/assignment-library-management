@@ -31,7 +31,7 @@ LANGUAGE plpgsql
 AS $$
     DECLARE days INT;
     BEGIN
-        SELECT COALESCE(return_date, CURRENT_DATE) - borrow_date into days
+        SELECT COALESCE(return_date, CURRENT_DATE) - borrow_date INTO days
         FROM borrowing
         WHERE borrow_id = searched_borrow_id;
 

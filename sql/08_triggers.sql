@@ -33,6 +33,7 @@ AS $$
                 UPDATE borrowing SET trans_ref = borrow_date + member_id WHERE borrow_id = NEW.borrow_id;
             END IF;
         END IF;
+        RETURN NEW;
     END;
 $$;
 
